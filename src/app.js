@@ -3,11 +3,13 @@ import dotenv from 'dotenv';
 import path from 'path';
 import morgan from 'morgan';
 import router from './router';
+import cors from 'cors';
 
 dotenv.config(); // 환경변수 사용
 
 const app = express();
 
+app.use(cors());
 app.set('port', process.env.PORT || 8000); // 포트 번호를 .env파일의 PORT 번호로 실행하거나 없다면 8000번으로 실행
 
 app.use(morgan('dev')); // 개발 환경일 때 morgan 미들웨어 사용
