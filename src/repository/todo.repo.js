@@ -17,9 +17,9 @@ export const getTodos = async (id, next) => {
 };
 
 // 생성
-export const postTodos = async (req, next) => {
+export const postTodos = async (text, next) => {
 	try {
-		const result = await prisma.todos.create({ data: { text: req.body.text } });
+		const result = await prisma.todos.create({ data: { text } });
 		return result;
 	} catch (err) {
 		console.error('/todo post 에러 발생');
@@ -30,8 +30,13 @@ export const postTodos = async (req, next) => {
 // 수정
 export const patchTodos = async (req, next) => {
 	try {
-		const target = req.params;
-		const result = await prisma.todos.update({ where: { id: +target.id }, data: { text: req.body.text } });
+		const newData = {};
+
+		if ('text' in req.body) newData.text = req.body.text;
+		if ('done' in req.body) newData.done = req.body.done;
+
+		const target = +req.params.id;
+		const result = await prisma.todos.update({ where: { id: target }, data: newData });
 		return result;
 	} catch (err) {
 		console.error('/todo patch 에러 발생');
@@ -40,13 +45,20 @@ export const patchTodos = async (req, next) => {
 };
 
 // 삭제
-export const deleteTodos = async (req, next) => {
+export const deleteTodos = async (target, next) => {
 	try {
-		const target = req.params;
-		const result = await prisma.todos.delete({ where: { id: +target.id } });
-		return result;
+		await prisma.todos.delete({ where: { id: +target } });
 	} catch (err) {
 		console.error('/todo delete 에러 발생');
+		next(err);
+	}
+};
+
+export const deleteAllTodos = async next => {
+	try {
+		await prisma.todos.deleteMany();
+	} catch (err) {
+		console.error(err);
 		next(err);
 	}
 };
