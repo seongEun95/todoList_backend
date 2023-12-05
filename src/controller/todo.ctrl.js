@@ -3,6 +3,8 @@ import { todoService } from '../service';
 // 조회
 export const getTodos = async (req, res, next) => {
 	try {
+		console.log(req.user);
+
 		const result = await todoService.getTodos(req, next);
 		res.status(200).json({ message: 'SUCCESS', result });
 	} catch (err) {

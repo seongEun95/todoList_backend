@@ -1,6 +1,5 @@
 import express from 'express';
 import dotenv from 'dotenv';
-import path from 'path';
 import morgan from 'morgan';
 import router from './router';
 import cors from 'cors';
