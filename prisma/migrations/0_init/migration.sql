@@ -1,5 +1,3 @@
-yarn run v1.22.19
-$ /Users/admin/Desktop/study/homework/todoList/node_modules/.bin/prisma migrate diff --from-empty --to-schema-datamodel prisma/schema.prisma --script
 -- CreateTable
 CREATE TABLE `todos` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
@@ -9,5 +7,3 @@ CREATE TABLE `todos` (
 
     PRIMARY KEY (`id`)
 ) DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-
-Done in 0.77s.
