@@ -3,6 +3,7 @@ import { todoController } from './controller';
 import * as bcrypt from 'bcryptjs';
 import prisma from './prisma';
 import jwt from 'jsonwebtoken';
+import checkLogin from './middleware/checkLogin';
 
 const router = Router();
 
@@ -30,6 +31,7 @@ router //
 	.post(async (req, res, next) => {
 		try {
 			const { email, password } = req.body;
+			console.log('비밀번호 : ' + req.body.password);
 
 			const found = await prisma.user.findFirst({ where: { email } });
 			if (!found) return res.status(400).json({ result: { message: 'EMAIL_NOT_FOUND' } });
@@ -64,7 +66,7 @@ router //
 // 데이터베이스 조회
 router //
 	.route('/todo')
-	.get(todoController.getTodos);
+	.get(checkLogin, todoController.getTodos);
 
 // 데이터베이스 생성
 router //
