@@ -71,16 +71,16 @@ router //
 // 데이터베이스 생성
 router //
 	.route('/todo')
-	.post(todoController.postTodos);
+	.post(checkLogin, todoController.postTodos);
 
 // 데이터베이스 수정
 router //
 	.route('/todo/:id')
-	.patch(todoController.patchTodos);
+	.patch(checkLogin, todoController.patchTodos);
 
 // 데이터베이스 삭제
 router //
 	.route('/todo/:id')
-	.delete(todoController.deleteTodos);
+	.delete(checkLogin, todoController.deleteTodos);
 
 export default router;
